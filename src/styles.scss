@@ -1,1 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --white-color: white;
+    --hover-white-color: rgb(204, 204, 204);
+    --footer-color: #999999;
+    --label-btn-color: #3f51b5;
+    --label-btn-hover-color: #374594;
+    --toggle-color: #919191;
+    --toggle-dot-color: #7ED957;
+    --error-color: red;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: "Fira sans", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-height: 100%;
+}
+
+app-root {
+    height: 100%;
+    margin: 0;
+  }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0px;
+    padding: 0px;
+}
+
+p {
+    margin: 0 !important;
+}
+
+.mid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.bg {
+    
+}

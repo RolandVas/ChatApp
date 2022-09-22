@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "chat-f63fd": {
+      "hosting": {
+        "Chat_app": [
+          "chat-f63fd"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "chat-f63fd"
+  }
+}
