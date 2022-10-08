@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule }   from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
@@ -20,6 +23,7 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { RoomComponent } from './chat/room/room.component';
 import { NavComponent } from './nav/nav.component';
 import { PageListComponent } from './page-list/page-list.component';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -37,8 +41,12 @@ import { PageListComponent } from './page-list/page-list.component';
     AppRoutingModule,
     MatToolbarModule,
     MatSidenavModule,
+    FormsModule,
     MatIconModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),

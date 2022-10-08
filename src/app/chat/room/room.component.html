@@ -4,10 +4,14 @@
     </div>
 
     <div class="message-container">
-        Chat
+        <div *ngFor="let message of allMessage;">
+            {{ message }}
+        </div>
+        
     </div>
 
     <div class="write-container">
-        Wrihte message
+        <textarea class="input-message" [(ngModel)]="msg" id="" cols="30" rows="10"></textarea>
+        <button (click)="sendMessage()">Send</button>
     </div>
 </div>
