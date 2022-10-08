@@ -3,20 +3,53 @@
         <mat-label>User name</mat-label>
         <input matInput formControlName="userName" type="text">
     </mat-form-field>
+    <ng-container *ngIf="registerForm.controls['userName'] as username">
+        <ng-container *ngIf="username.touched || username.dirty">
+            <p *ngIf="username.errors?.required">Es muss ein Username eingegeben werden.</p>
+            <p *ngIf="username.errors?.minlength">Es sollte mindestens {{ username.errors?.minlength.requiredLength }} Buchstaben geben.</p>
+            <!-- <p> {{username.errors | json}} </p> zeigt username.errors als text an -->
+        </ng-container>
+    </ng-container>
+
     <mat-form-field class="form-control">
         <mat-label>Your email</mat-label>
-        <input matInput formControlName="email" type="text">
+        <input matInput formControlName="email" type="email">
     </mat-form-field>
+    <ng-container *ngIf="registerForm.controls['email'] as email">
+        <ng-container *ngIf="email.touched || email.dirty">
+            <p *ngIf="email.errors?.required">Es muss ein email eingegeben werden.</p>
+            <p *ngIf="email.errors?.pattern">Email format ist ungültig.</p>
+        </ng-container>
+    </ng-container>
+
     <mat-form-field class="form-control">
         <mat-label>Your password</mat-label>
         <input matInput formControlName="password" type="password">
     </mat-form-field>
-    <!-- <mat-form-field class="form-control">
-        <mat-label>Your password</mat-label>
+    <ng-container *ngIf="registerForm.controls['password'] as password">
+        <ng-container *ngIf="password.touched || password.dirty">
+            <p *ngIf="password.errors?.required">Es muss ein password eingegeben werden.</p>
+            <p *ngIf="password.errors?.minlength">Es sollte mindestens {{ password.errors?.minlength.requiredLength }} Buchstaben geben.</p>
+        </ng-container>
+    </ng-container>
+
+    <mat-form-field class="form-control">
+        <mat-label>Confirm password</mat-label>
         <input matInput formControlName="confirmPassword" type="password">
-    </mat-form-field> -->
+    </mat-form-field>
+    <ng-container *ngIf="registerForm.controls['confirmPassword'] as confirmPassword">
+        <ng-container *ngIf="confirmPassword.touched || confirmPassword.dirty">
+            <p *ngIf="confirmPassword.errors?.required">Es muss ein password eingegeben werden.</p>
+            <p *ngIf="confirmPassword.errors?.minlength">Es sollte mindestens {{ confirmPassword.errors?.minlength.requiredLength }} Buchstaben geben.</p>
+        </ng-container>
+    </ng-container>
+
+    <div *ngIf="passwordMatchError">
+        Password does not match
+    </div>
+
     <div class="form-footer">
-        <button mat-button (click)="createUser()">login</button>
+        <button mat-button [disabled]="!registerForm.valid" (click)="createUser()">login</button>
         <a routerLink="/login">go to login</a>
     </div>
 </form>
