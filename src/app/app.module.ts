@@ -8,6 +8,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule }   from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +26,9 @@ import { RoomComponent } from './chat/room/room.component';
 import { NavComponent } from './nav/nav.component';
 import { PageListComponent } from './page-list/page-list.component';
 import { AngularFireModule } from '@angular/fire/compat';
+import { AddChannelComponent } from './dialog-c/add-channel/add-channel.component';
+
+
 
 @NgModule({
   declarations: [
@@ -34,7 +39,8 @@ import { AngularFireModule } from '@angular/fire/compat';
     SignUpComponent,
     RoomComponent,
     NavComponent,
-    PageListComponent
+    PageListComponent,
+    AddChannelComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,8 +48,10 @@ import { AngularFireModule } from '@angular/fire/compat';
     MatToolbarModule,
     MatSidenavModule,
     FormsModule,
+    MatDialogModule,
     MatIconModule,
     MatInputModule,
+    MatButtonModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -52,7 +60,9 @@ import { AngularFireModule } from '@angular/fire/compat';
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,6 +2,15 @@ mat-icon{
     cursor: pointer;
 }
 
+.nav {
+    padding-right: 16px;
+    padding-left: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+}
+
 .side-nav{
     height: 100%;
     width: 200px;
@@ -12,10 +21,16 @@ mat-icon{
 }
 
 .nav-container{
-    height: 50%;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding-right: 16px;
-    padding-left: 16px;
+}
+
+.channel {
+    margin-bottom: 8px;
+    font-weight: bold;
+
+    &:hover {
+        cursor: pointer;
+    }
 }

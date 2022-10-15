@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { FirebaseService } from '../_service/firebase.service';
 
 
 @Component({
@@ -11,15 +11,12 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   showFiller = true;
 
-  constructor(private auth: AngularFireAuth, private router: Router) { }
+  constructor(public fbService: FirebaseService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   logout() {
-    this.auth.signOut().then( () =>
-    this.router.navigate(['login'])
-    );
-    
+    this.fbService.logout()
   }
 }

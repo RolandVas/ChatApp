@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { from } from 'rxjs';
+import { Channel } from '../_interface/channel';
 import { User } from '../_interface/user';
 
 @Injectable({
@@ -9,12 +11,11 @@ import { User } from '../_interface/user';
 })
 export class FirebaseService {
 
-  isLoggedIn = false;
-
-  // User Interface
+  isAuthenticated: boolean;
   user: User;
 
-  constructor(private auth: AngularFireAuth, private router: Router, private firestore: AngularFirestore,) { }
+  constructor(private auth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) { }
+  
 
   signup(userName: string, email: string, password: string) {
     return this.auth.createUserWithEmailAndPassword(email, password).then( user => {
@@ -31,8 +32,19 @@ export class FirebaseService {
   }
 
   login(email: string, password: string) {
-    return this.auth.signInWithEmailAndPassword(email, password).then( user => {
+    return from(this.auth.signInWithEmailAndPassword(email, password)).subscribe(()=>{
+      this.isAuthenticated = true;
       this.router.navigate([''])
+    })
+  }
+
+  logout() {
+    return from(this.auth.signOut()).subscribe(()=>{
+      this.isAuthenticated = false;
+      this.router.navigate([{outlets: {room: null}}]).then(()=>{
+        this.router.navigate(['/login'])
+      })
+      
     })
   }
 
@@ -47,5 +59,12 @@ export class FirebaseService {
         console.log(done); 
       }))
   }
+  
+  getChannels() {
+    return this.firestore
+      .collection('channel')
+      .valueChanges()
+  }
+
 
 }

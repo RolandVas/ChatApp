@@ -3,13 +3,23 @@
         Logo
     </div>
     
-    <div class="nav-container">
-        <span>Channels</span>
-        <mat-icon>add</mat-icon>
+    <div class="nav">
+        <span [routerLink]="''">Home</span>
+        <div class="nav-container">
+            <h3>Channels</h3>
+            <mat-icon (click)="openDialog()">add</mat-icon>
+        </div>
+        <div class="channel-list">
+            <div *ngFor="let channel of $channels" [routerLink]="[{ outlets: { 'room': [channel.id] } }]" class="channel">
+               # {{ channel.name }}
+            </div>
+        </div>
     </div>
     
-    <div class="nav-container">
-        <span>DM</span>
-        <mat-icon>add</mat-icon>
+    <div class="nav">
+        <div class="nav-container">
+            <h3>DM</h3>
+            <mat-icon>add</mat-icon>
+        </div>
     </div>
 </div>
