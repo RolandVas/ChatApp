@@ -10,6 +10,8 @@ export class ChatService {
 
   $channel: Channel;
 
+  currentChannel;
+
   constructor(private firestore: AngularFirestore, private router: Router) { }
 
   saveChannelOnFirebase(channel) {
@@ -28,4 +30,16 @@ export class ChatService {
         .doc(id)
         .update({ id: id });
   }
+
+  // getCurrentChannel(id) {
+  //   this.firestore
+  //     .collection('channel')
+  //     .doc(id)
+  //     .valueChanges()
+  //     .subscribe((channel: any) => { 
+  //       this.currentChannel = channel
+  //       console.log(channel);
+        
+  //     })
+  // }
 }

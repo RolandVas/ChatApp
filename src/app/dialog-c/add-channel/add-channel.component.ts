@@ -11,6 +11,8 @@ import { ChatService } from 'src/app/_service/chat.service';
 })
 export class AddChannelComponent implements OnInit {
 
+  date
+  timeStamp
 
   $channel: Channel;
 
@@ -26,7 +28,8 @@ export class AddChannelComponent implements OnInit {
     this.$channel = {
       name: '',
       description: '',
-      id: ''
+      id: '',
+      time: ''
     }
    }
 
@@ -37,6 +40,11 @@ export class AddChannelComponent implements OnInit {
     const {channelName, channelDescription} = this.channelForm.value;
     this.$channel.name = channelName;
     this.$channel.description = channelDescription;
+
+    this.date = new Date();
+    this.timeStamp = this.date.getTime()
+    this.$channel.time = this.timeStamp
+
     this.chatService.saveChannelOnFirebase(this.$channel)
     this.dialogRef.close()
   }

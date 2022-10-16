@@ -1,4 +1,5 @@
 export interface Chat {
-    message: string [];
+    message: string;
     user: string; 
+    time: string;
 }

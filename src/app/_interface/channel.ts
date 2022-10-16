@@ -2,6 +2,7 @@ export interface Channel {
     name: string;
     description?: string;
     id?: string; 
+    time: string;
     // toJSON()
 }
 

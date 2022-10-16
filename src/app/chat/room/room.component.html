@@ -1,14 +1,15 @@
 <div class="chat">
     <div class="chat-header">
-        <h2>header</h2>
+        <h2> {{ currentChannel?.name }} </h2>
+        <h3> {{ currentChannel?.description }} </h3>
     </div>
 
     <div class="message-container">
-        <app-chat [$chat]="msgObject"></app-chat>
+        <app-chat [chat]="messages"></app-chat>
     </div>
 
     <div class="write-container">
-        <textarea class="input-message" [(ngModel)]="msg" id="" cols="30" rows="10"></textarea>
+        <textarea class="input-message" [(ngModel)]="msgObject.message" id="" cols="30" rows="10"></textarea>
         <button (click)="sendMessage()">Send</button>
     </div>
 </div>

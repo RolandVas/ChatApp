@@ -1,9 +1,9 @@
 <div >
-    <div *ngFor="let message of $chat.message" class="message">
+    <div class="message" *ngFor="let message of chat">
         <div class="message-head">
             <span>Roland</span>
             <span>12:00</span>
         </div>
-        <span class="message-text">{{ message }}</span>
+        <span class="message-text"> {{ message.message }} </span>
     </div>
 </div>
