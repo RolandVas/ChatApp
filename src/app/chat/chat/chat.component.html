@@ -1,9 +1,8 @@
-<div >
+
     <div class="message" *ngFor="let message of chat">
         <div class="message-head">
-            <span>Roland</span>
-            <span>12:00</span>
+            <span> {{ message.user }} </span>
+            <span> {{ message.time }} </span>
         </div>
         <span class="message-text"> {{ message.message }} </span>
     </div>
-</div>

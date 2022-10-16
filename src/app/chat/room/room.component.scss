@@ -16,6 +16,8 @@
 .message-container{
     height: 100%;
     background-color: aquamarine;
+    overflow-y: scroll;
+    // overflow: hidden;
 }
 
 .input-message {

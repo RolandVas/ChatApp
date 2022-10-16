@@ -13,13 +13,17 @@ import { FirebaseService } from 'src/app/_service/firebase.service';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
-
-  date
-  timeStamp
+  dateToday = new Date();
+  currentTime = ('0' + this.dateToday.getHours()).slice(-2) + ':' + ('0' + this.dateToday.getMinutes()).slice(-2);
+  currentDate = this.dateToday.getFullYear() + '-' + ('0' + (this.dateToday.getMonth() + 1)).slice(-2) + '-' + ('0' + this.dateToday.getDate()).slice(-2);
+  messageTime
 
   msg: string;
   msgObject: Chat;
   channelID: string;
+
+  date
+  time
 
   currentChannel
 
@@ -38,6 +42,7 @@ export class RoomComponent implements OnInit {
     this.msgObject = {
       message: '',
       user: '',
+      timeStamp: '',
       time: ''
     }
   }
@@ -51,14 +56,19 @@ export class RoomComponent implements OnInit {
       this.getMessageForCurrentChannel()
     });
 
-
+    this.auth.user.subscribe(user => {
+      this.msgObject.user = user?.displayName
+      console.log(user)
+    })
 
   }
 
   sendMessage() {
     this.date = new Date();
-    this.timeStamp = this.date.getTime()
-    this.msgObject.time = this.timeStamp
+    this.time = this.dateToday.getTime()
+    this.messageTime = this.currentTime + ' ' + this.currentDate
+    this.msgObject.timeStamp = this.time
+    this.msgObject.time = this.messageTime
 
     this.auth.user.subscribe(user => {
       this.msgObject.user = user.displayName
@@ -91,8 +101,8 @@ export class RoomComponent implements OnInit {
       })
   }
 
-  //can i call this function from chatService
-  //an how i get the current messages for current channel from chatService
+  // can i call this function from chatService
+  // an how i get the current messages for current channel from chatService
   getMessageForCurrentChannel() {
     this.firestore
       .collection('channel')
@@ -100,8 +110,9 @@ export class RoomComponent implements OnInit {
       .collection('message')
       .valueChanges()
       .subscribe((message: any) => {
+        //sort the messages in chronological order
         this.messages = message.sort(
-          (A, B) => A.time - B.time
+          (A, B) => {return A.timeStamp - B.timeStamp} // whay the return is necessary?
         )
 
       })

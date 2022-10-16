@@ -11,7 +11,6 @@ import { User } from '../_interface/user';
 export class FirebaseService {
 
   isAuthenticated: boolean;
-  user: User;
 
   constructor(private auth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) { }
   
@@ -20,12 +19,12 @@ export class FirebaseService {
     return this.auth.createUserWithEmailAndPassword(email, password).then( user => {
       this.router.navigate([''])
       console.log('save user: ', this.auth)
-      this.user = {
-        userName: userName,
-        email: email,
-        UID: user.user.uid
-      }
-      this.saveUserInFirabase()
+      user.user.updateProfile({
+        displayName: userName,
+      })
+
+      
+      // this.saveUserInFirabase()
     });
     
   }
@@ -44,17 +43,17 @@ export class FirebaseService {
     })
   }
 
-  saveUserInFirabase() {
-    this.firestore
-      .collection('users')
-      .add(this.user)
-      .catch((err => {
-        console.log(err);
-      }))
-      .then((done =>{
-        console.log(done); 
-      }))
-  }
+  // saveUserInFirabase() {
+  //   this.firestore
+  //     .collection('users')
+  //     .add(this.user)
+  //     .catch((err => {
+  //       console.log(err);
+  //     }))
+  //     .then((done =>{
+  //       console.log(done); 
+  //     }))
+  // }
   
   getChannels() {
     return this.firestore
