@@ -13,9 +13,7 @@ import { FirebaseService } from 'src/app/_service/firebase.service';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
-  dateToday = new Date();
-  currentTime = ('0' + this.dateToday.getHours()).slice(-2) + ':' + ('0' + this.dateToday.getMinutes()).slice(-2);
-  currentDate = this.dateToday.getFullYear() + '-' + ('0' + (this.dateToday.getMonth() + 1)).slice(-2) + '-' + ('0' + this.dateToday.getDate()).slice(-2);
+  
   messageTime
 
   msg: string;
@@ -65,8 +63,10 @@ export class RoomComponent implements OnInit {
 
   sendMessage() {
     this.date = new Date();
-    this.time = this.dateToday.getTime()
-    this.messageTime = this.currentTime + ' ' + this.currentDate
+    this.time = this.date.getTime()
+    let currentTime = ('0' + this.date.getHours()).slice(-2) + ':' + ('0' + this.date.getMinutes()).slice(-2);
+    let currentDate = this.date.getFullYear() + '-' + ('0' + (this.date.getMonth() + 1)).slice(-2) + '-' + ('0' + this.date.getDate()).slice(-2);
+    this.messageTime = currentTime + ' ' + currentDate
     this.msgObject.timeStamp = this.time
     this.msgObject.time = this.messageTime
 
