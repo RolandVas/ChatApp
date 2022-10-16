@@ -4,10 +4,7 @@
     </div>
 
     <div class="message-container">
-        <div *ngFor="let message of allMessage;">
-            {{ message }}
-        </div>
-        
+        <app-chat [$chat]="msgObject"></app-chat>
     </div>
 
     <div class="write-container">

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FirebaseService } from './_service/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -16,10 +14,10 @@ export class AppComponent implements OnInit {
   constructor(private auth: AngularFireAuth) { }
 
   ngOnInit(): void {
+    // need to find a better solution for login detection
     this.auth.user.subscribe(user => {
       this.user = user
     })
-
-    console.log('user: ', this.user)
   }
+  
   }

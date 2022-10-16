@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
-import { Channel } from '../_interface/channel';
 import { User } from '../_interface/user';
 
 @Injectable({
@@ -34,17 +33,14 @@ export class FirebaseService {
   login(email: string, password: string) {
     return from(this.auth.signInWithEmailAndPassword(email, password)).subscribe(()=>{
       this.isAuthenticated = true;
-      this.router.navigate([''])
+      this.router.navigate(['home'])
     })
   }
 
   logout() {
     return from(this.auth.signOut()).subscribe(()=>{
       this.isAuthenticated = false;
-      this.router.navigate([{outlets: {room: null}}]).then(()=>{
-        this.router.navigate(['/login'])
-      })
-      
+      this.router.navigate(['/login'])
     })
   }
 

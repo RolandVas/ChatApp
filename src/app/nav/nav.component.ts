@@ -17,7 +17,6 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.fbService.getChannels().subscribe( channels => {
       this.$channels = channels
-      console.log('channels:', channels)
     })
   }
 

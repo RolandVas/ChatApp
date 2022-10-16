@@ -1,11 +1,1 @@
-<div class="bg" *ngIf="user">
-    <app-header></app-header>
-
-    <div class="nav-content-container">
-        <app-nav class="app-nav"></app-nav>
-        
-        <router-outlet name="room"></router-outlet>
-    </div>
-</div>
-
-<router-outlet *ngIf="!user"></router-outlet>
+<router-outlet></router-outlet>

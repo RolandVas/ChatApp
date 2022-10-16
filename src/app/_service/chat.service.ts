@@ -17,9 +17,8 @@ export class ChatService {
     .collection('channel')
     .add(channel)
     .then( (channel: any) => {
-      this.router.navigateByUrl('/channel/' + channel.id)
-      console.log('save channel:', channel)
       this.updateChannelWithId(channel.id)
+      this.router.navigateByUrl('home/' + channel.id)
     });
   }
 

@@ -27,6 +27,7 @@ import { NavComponent } from './nav/nav.component';
 import { PageListComponent } from './page-list/page-list.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AddChannelComponent } from './dialog-c/add-channel/add-channel.component';
+import { ChatComponent } from './chat/chat/chat.component';
 
 
 
@@ -41,6 +42,7 @@ import { AddChannelComponent } from './dialog-c/add-channel/add-channel.componen
     NavComponent,
     PageListComponent,
     AddChannelComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
