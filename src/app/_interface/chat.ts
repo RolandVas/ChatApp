@@ -3,4 +3,6 @@ export interface Chat {
     user: string; 
     time: string;
     timeStamp: string;
+    id?: string;
+    channelID?: string
 }

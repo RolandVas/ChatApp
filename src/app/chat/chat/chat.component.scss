@@ -1,11 +1,22 @@
 .message {
     margin: 16px;
+    
+    background-color: bisque;
 }
 
 .message-head {
     margin-bottom: 8px;
 
     span {
-        margin-right: 16px;
+        margin-right: 8px;
     }
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.message-time {
+    font-size: small;
+    color: gray;
 }

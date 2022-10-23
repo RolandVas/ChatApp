@@ -4,7 +4,7 @@
         <h3> {{ currentChannel?.description }} </h3>
     </div>
 
-    <div class="message-container">
+    <div class="message-container" #scrollMe [scrollTop]="scrollMe.scrollHeight">
         <app-chat [chat]="messages"></app-chat>
     </div>
 

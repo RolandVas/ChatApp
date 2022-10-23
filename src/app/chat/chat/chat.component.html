@@ -1,8 +1,12 @@
 
     <div class="message" *ngFor="let message of chat">
         <div class="message-head">
-            <span> {{ message.user }} </span>
-            <span> {{ message.time }} </span>
+            <span class="user-name"> {{ message.user }} </span>
+            <span class="message-time"> {{ message.time }} </span>
         </div>
         <span class="message-text"> {{ message.message }} </span>
+        <div>
+            <button (click)="deleteMessage(message.id, message.channelID)">Delete</button>
+            <button>Thread</button>
+        </div>
     </div>

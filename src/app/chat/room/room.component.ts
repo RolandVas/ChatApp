@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -13,7 +13,7 @@ import { FirebaseService } from 'src/app/_service/firebase.service';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
-  
+
   messageTime
 
   msg: string;
@@ -35,7 +35,8 @@ export class RoomComponent implements OnInit {
       private route: ActivatedRoute,
       public fbService: FirebaseService,
       public chatService: ChatService,
-      private auth: AngularFireAuth
+      private auth: AngularFireAuth,
+      private _el: ElementRef
     ) {
     this.msgObject = {
       message: '',
@@ -62,17 +63,9 @@ export class RoomComponent implements OnInit {
   }
 
   sendMessage() {
-    this.date = new Date();
-    this.time = this.date.getTime()
-    let currentTime = ('0' + this.date.getHours()).slice(-2) + ':' + ('0' + this.date.getMinutes()).slice(-2);
-    let currentDate = this.date.getFullYear() + '-' + ('0' + (this.date.getMonth() + 1)).slice(-2) + '-' + ('0' + this.date.getDate()).slice(-2);
-    this.messageTime = currentTime + ' ' + currentDate
-    this.msgObject.timeStamp = this.time
-    this.msgObject.time = this.messageTime
+    this.getTimeAndDate()
 
-    this.auth.user.subscribe(user => {
-      this.msgObject.user = user.displayName
-    })
+    this.getCurrentUserName()
 
     this.firestore
       .collection('channel')
@@ -80,10 +73,46 @@ export class RoomComponent implements OnInit {
       .collection('message')
       .add(this.msgObject)
       .then((message: any) => {
-        console.log('save:', message)
+        console.log('save:', message.id)
+        this.updateChannelWithId(message.id, this.channelID)
+        this.updateChannelWithIdChannel(message.id, this.channelID)
       });
 
     this.msgObject.message = '';
+  }
+
+  updateChannelWithId(id, channelID) {
+    this.firestore
+      .collection('channel')
+      .doc(channelID)
+      .collection('message')
+      .doc(id)
+      .update({ id: id })
+  }
+
+  updateChannelWithIdChannel(id, channelID) {
+    this.firestore
+      .collection('channel')
+      .doc(channelID)
+      .collection('message')
+      .doc(id)
+      .update({ channelID: channelID })
+  }
+
+  getTimeAndDate() {
+    this.date = new Date();
+    this.time = this.date.getTime()
+    let currentTime = ('0' + this.date.getHours()).slice(-2) + ':' + ('0' + this.date.getMinutes()).slice(-2);
+    let currentDate = this.date.getFullYear() + '-' + ('0' + (this.date.getMonth() + 1)).slice(-2) + '-' + ('0' + this.date.getDate()).slice(-2);
+    this.messageTime = currentTime + ' ' + currentDate
+    this.msgObject.timeStamp = this.time
+    this.msgObject.time = this.messageTime
+  }
+
+  getCurrentUserName() {
+    this.auth.user.subscribe(user => {
+      this.msgObject.user = user.displayName
+    })
   }
 
 
@@ -112,10 +141,15 @@ export class RoomComponent implements OnInit {
       .subscribe((message: any) => {
         //sort the messages in chronological order
         this.messages = message.sort(
-          (A, B) => {return A.timeStamp - B.timeStamp} // whay the return is necessary?
+          (A, B) => { return A.timeStamp - B.timeStamp } // whay the return is necessary?
         )
 
       })
+  }
+
+  public scrollToBottom() {
+    const el: HTMLDivElement = this._el.nativeElement;
+    el.scrollTop = Math.max(0, el.scrollHeight - el.offsetHeight);
   }
 
 
