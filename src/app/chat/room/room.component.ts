@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Channel } from 'src/app/_interface/channel';
 import { Chat } from 'src/app/_interface/chat';
 import { ChatService } from 'src/app/_service/chat.service';
@@ -12,7 +12,8 @@ import { FirebaseService } from 'src/app/_service/firebase.service';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss']
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, AfterViewChecked  {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   messageTime
 
@@ -36,7 +37,8 @@ export class RoomComponent implements OnInit {
       public fbService: FirebaseService,
       public chatService: ChatService,
       private auth: AngularFireAuth,
-      private _el: ElementRef
+      private _el: ElementRef,
+      private router: Router
     ) {
     this.msgObject = {
       message: '',
@@ -49,7 +51,6 @@ export class RoomComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap) => {
       this.channelID = paramMap.get('id');
-      console.log('channel ID:', this.channelID)
 
       this.getCurrentChannel()
       this.getMessageForCurrentChannel()
@@ -57,9 +58,9 @@ export class RoomComponent implements OnInit {
 
     this.auth.user.subscribe(user => {
       this.msgObject.user = user?.displayName
-      console.log(user)
     })
 
+    this.scrollToBottom();
   }
 
   sendMessage() {
@@ -125,8 +126,6 @@ export class RoomComponent implements OnInit {
       .valueChanges()
       .subscribe((channel: any) => {
         this.currentChannel = channel
-        console.log(channel);
-
       })
   }
 
@@ -147,9 +146,26 @@ export class RoomComponent implements OnInit {
       })
   }
 
+  deleteChannel(channelID) {
+      this.firestore
+        .collection('channel')
+        .doc(channelID)
+        .delete()
+        .then(() => {
+          this.router.navigate([''])
+        }).catch((error) => {
+        console.error("Error removing document: ", error);
+      });
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
   public scrollToBottom() {
-    const el: HTMLDivElement = this._el.nativeElement;
-    el.scrollTop = Math.max(0, el.scrollHeight - el.offsetHeight);
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }
   }
 
 

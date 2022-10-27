@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddChannelComponent } from '../dialog-c/add-channel/add-channel.component';
 import { ChatService } from '../_service/chat.service';
 import { FirebaseService } from '../_service/firebase.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-nav',
@@ -13,8 +14,14 @@ export class NavComponent implements OnInit {
 
   $channels;
   $sortedChannels
+  currentUserName
 
-  constructor(public dialog: MatDialog, public fbService: FirebaseService, public chat: ChatService) { }
+  constructor(
+    public dialog: MatDialog,
+    public fbService: FirebaseService,
+    public chat: ChatService,
+    private auth: AngularFireAuth
+  ) { }
 
   ngOnInit(): void {
     this.fbService.getChannels().subscribe( channels => {
@@ -25,10 +32,17 @@ export class NavComponent implements OnInit {
        )
     })
 
-    
+    this.getCurrentUserName()
+
   }
 
- 
+  getCurrentUserName() {
+    this.auth.currentUser.then(user => {
+      this.currentUserName = user.displayName
+    })
+  }
+
+
 
   openDialog() {
     this.dialog.open(AddChannelComponent)
